@@ -19,3 +19,4 @@ namespace backend.Data.Models
         public User? User { get; init; }
     }
 }
+

@@ -14,25 +14,55 @@ public class CvService(AppDbContext context) : ICvService
 
     // TODO: Oppgave 1
 
+    public async Task<User?> GetUserByIdAsync(Guid id)
+    {
+        return await context.Users.FindAsync(id);
+    }
+
     public async Task<IEnumerable<Experience>> GetAllExperiencesAsync()
     {
         // TODO: Oppgave 2
-        return [];
+        return await context.Experiences.OrderBy(u => u.Title).ToListAsync();
     }
 
     public async Task<Experience?> GetExperienceByIdAsync(Guid id)
     {
         // TODO: Oppgave 2
 
-        return null;
+        return await context.Experiences.FindAsync(id);
     }
 
     public async Task<IEnumerable<Experience>> GetExperiencesByTypeAsync(string type)
     {
-        // TODO: Oppgave 3
+        return await context.Experiences.Where(u => u.Type == type).ToListAsync();
 
-        return [];
     }
+
+    public async Task<IEnumerable<User>> GetUsersWithDesiredSkills(IEnumerable<string> desiredTechnologies)
+    {
+        var users = await GetAllUsersAsync();
+
+        return users.Where(
+
+            user => UserMapper.ParseUserSkills(user.Skills).Any(skill => desiredTechnologies.Contains(skill.Technology))
+
+
+        ).ToList();
+
+
+
+
+
+
+
+
+
+
+    }
+
+
+
+
 
     // TODO: Oppgave 4 ny metode (husk å legge den til i interfacet)
 }

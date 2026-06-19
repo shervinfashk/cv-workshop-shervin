@@ -46,9 +46,9 @@ public static class UserEndpoints
                 "/users/skills/",
                 async (ICvService cvService, SkillRequest skills) =>
                 {
-                    // TODO: Oppgave 4
-                    // TODO: parse skills
-                    return Results.Ok();
+                    var parsedSkills = skills.WantedSkills;
+                    var usersWithWantedSkills = await cvService.GetUsersWithDesiredSkills(parsedSkills);
+                    return Results.Ok(usersWithWantedSkills.Select(u => u.ToDto()).ToList());
                 }
             )
             .WithName("GetUsersWithDesiredSkill")

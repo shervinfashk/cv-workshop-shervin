@@ -23,16 +23,16 @@ export function ExperienceCard({ experience }: ExperienceCardProps) {
   return (
 
     <>
+      {showModal && <PopupModal open={showModal} title={experience.title} onCloseHandler={() => setShowModal(!showModal)} children={<p>{experience.description}</p>} />}
 
 
-      <div className={styles.container} >
-        {showModal && <PopupModal open={showModal} title={experience.title} onCloseHandler={() => setShowModal(!showModal)} children={<p>{experience.description}</p>} />}
+      <div className={styles.container} onClick={() => setShowModal(!showModal)}>
         <img
           className={styles.image}
           src={experience.imageUrl || akersgataImage}
           alt={experience.title}
         />
-        <div className={styles.chip} onClick={() => setShowModal(!showModal)}>
+        <div className={styles.chip} >
           <ExperienceChip type={experience.type} />
         </div>
         <div className={styles.info}>
